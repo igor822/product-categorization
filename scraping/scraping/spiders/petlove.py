@@ -16,7 +16,8 @@ class PetloveSpider(scrapy.Spider):
             yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response):
-        for product_url in response.css('a.product-wrapper::attr(href)'):
+        selector = 'a.product-wrapper::attr(href)'
+        for product_url in response.css('div#shelf-loop a::attr(href)'):
             yield response.follow(product_url, self.parse_product)
 
     def parse_product(self, response):
